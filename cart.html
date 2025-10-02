@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - NextRig</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4a24449835.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#" class="nav-logo">NextRig</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">Forum</a></li>
+                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-user"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+
+        <div class="cart-layout">
+            <section class="cart-items">
+                <h2>Cart Items (3)</h2>
+                <div class="cart-item-list">
+                    <div class="cart-item">
+                        <div class="item-image">RTX 3070</div>
+                        <div class="item-details">
+                            <h3>NVIDIA GeForce RTX 3070</h3>
+                            <p>Used - Excellent condition</p>
+                            <p class="seller">Seller: TechSellerXYZ</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button>-</button>
+                            <input type="text" value="1">
+                            <button>+</button>
+                        </div>
+                        <div class="item-price">$ 420.00</div>
+                        <button class="item-remove"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                    <div class="cart-item">
+                        <div class="item-image">I7-10700K</div>
+                        <div class="item-details">
+                            <h3>Intel Core i7-10700K</h3>
+                            <p>Used - Good condition</p>
+                            <p class="seller">Seller: CPUMaster</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button>-</button>
+                            <input type="text" value="1">
+                            <button>+</button>
+                        </div>
+                        <div class="item-price">$ 280.00</div>
+                        <button class="item-remove"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                    <div class="cart-item">
+                        <div class="item-image">32GB DDR4</div>
+                        <div class="item-details">
+                            <h3>Corsair Vengeance LPX 32GB DDR4</h3>
+                            <p>Used - Like new</p>
+                            <p class="seller">Seller: MemoryKing</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button>-</button>
+                            <input type="text" value="1">
+                            <button>+</button>
+                        </div>
+                        <div class="item-price">$ 180.00</div>
+                        <button class="item-remove"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+                <div class="cart-footer">
+                    <a href="#" class="continue-shopping">← Continue Shopping</a>
+                    <a href="#" class="save-for-later">♡ Save for Later</a>
+                </div>
+            </section>
+
+            <aside class="order-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>880.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span>15.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax</span>
+                        <span>67.20</span>
+                    </div>
+                    <hr>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>$962.20</span>
+                    </div>
+                    <div class="promo-code">
+                        <label for="promo">Promo Code</label>
+                        <div class="promo-input">
+                            <input type="text" id="promo" placeholder="Enter code">
+                            <button>Apply</button>
+                        </div>
+                    </div>
+                    <button class="checkout-btn">
+                        <i class="fas fa-lock"></i> Proceed to Checkout
+                    </button>
+                    <p class="secure-checkout-text">Secure checkout with 256-bit SSL encryption</p>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+
+                <div class="buyer-protection-card">
+                    <h3>Buyer Protection</h3>
+                    <ul>
+                        <li>
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Money-back guarantee</strong>
+                                <p>Get a refund if not as described</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <strong>Secure shipping</strong>
+                                <p>Tracked and insured delivery</p>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-headset"></i>
+                            <div>
+                                <strong>24/7 support</strong>
+                                <p>Help when you need it</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+    
+    <button class="help-btn">
+        <i class="fas fa-question-circle"></i> Help
+    </button>
+
+</body>
+</html>

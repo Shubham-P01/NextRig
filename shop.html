@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - NextRig</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4a24449835.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#" class="nav-logo">NextRig</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link active">Shop</a></li>
+                <li><a href="#" class="nav-link">Forum</a></li>
+                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-user"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <div>
+                <h1>Shop Pre-owned PC Parts</h1>
+                <p>Find quality used components at great prices</p>
+            </div>
+            <button class="add-listing-btn">+</button>
+        </div>
+
+        <div class="shop-layout">
+            <aside class="filters-sidebar">
+                <h3>Filters</h3>
+                <form>
+                    <div class="filter-group">
+                        <label for="sort-by">Sort By</label>
+                        <select id="sort-by" name="sort-by">
+                            <option>Most Popular</option>
+                            <option>Price: Low to High</option>
+                            <option>Price: High to Low</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Categories</h4>
+                        <div class="checkbox-item"><input type="checkbox" id="cat1"> <label for="cat1">Graphics Cards</label> <span>(234)</span></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cat2"> <label for="cat2">Processors</label> <span>(156)</span></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cat3"> <label for="cat3">Memory</label> <span>(89)</span></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cat4"> <label for="cat4">Storage</label> <span>(124)</span></div>
+                        <div class="checkbox-item"><input type="checkbox" id="cat5"> <label for="cat5">Motherboards</label> <span>(67)</span></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Brand</h4>
+                        <div class="checkbox-item"><input type="checkbox" id="brand1"> <label for="brand1">NVIDIA</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="brand2"> <label for="brand2">AMD</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="brand3"> <label for="brand3">Intel</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="brand4"> <label for="brand4">ASUS</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="brand5"> <label for="brand5">MSI</label></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Price Range</h4>
+                        <div class="price-inputs">
+                            <input type="number" placeholder="Min">
+                            <input type="number" placeholder="Max">
+                        </div>
+                        <div class="radio-item"><input type="radio" id="price1" name="price-range"> <label for="price1">Under $100</label></div>
+                        <div class="radio-item"><input type="radio" id="price2" name="price-range"> <label for="price2">$100 - $300</label></div>
+                        <div class="radio-item"><input type="radio" id="price3" name="price-range"> <label for="price3">$300 - $500</label></div>
+                        <div class="radio-item"><input type="radio" id="price4" name="price-range"> <label for="price4">Over $500</label></div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Condition</h4>
+                        <div class="radio-item"><input type="radio" id="cond1" name="condition"> <label for="cond1">Like New</label></div>
+                        <div class="radio-item"><input type="radio" id="cond2" name="condition"> <label for="cond2">Excellent</label></div>
+                        <div class="radio-item"><input type="radio" id="cond3" name="condition"> <label for="cond3">Good</label></div>
+                        <div class="radio-item"><input type="radio" id="cond4" name="condition"> <label for="cond4">Fair</label></div>
+                    </div>
+                    
+                    <button type="submit" class="apply-filters-btn">Apply Filters</button>
+                </form>
+            </aside>
+
+            <section class="product-listings">
+                <div class="toolbar">
+                    <p class="results-count">Showing 1-12 of 234 results</p>
+                    <div class="view-options">
+                        <i class="fas fa-th-large active"></i>
+                        <i class="fas fa-bars"></i>
+                    </div>
+                    <input type="search" placeholder="Search products..." class="search-bar">
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image" style="background-color: #E0E0E0;"><span class="img-text">RTX 3070 Image</span></div>
+                        <div class="card-content">
+                            <div class="card-tags">
+                                <span class="tag tag-excellent">Excellent</span>
+                                <span class="tag tag-category">Graphics Card</span>
+                            </div>
+                            <h3>NVIDIA RTX 3070 Founders Edition</h3>
+                            <p class="description">Barely used RTX 3070, perfect for 1440p gaming. Includes original box and documentation.</p>
+                            <span class="price">$399</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                <span>(24)</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="seller">by TechSeller</span>
+                                <a href="#" class="details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image" style="background-color: #E0E0E0;"><span class="img-text">Ryzen 7 5800X Image</span></div>
+                        <div class="card-content">
+                            <div class="card-tags">
+                                <span class="tag tag-like-new">Like New</span>
+                                <span class="tag tag-category">Processor</span>
+                            </div>
+                            <h3>AMD Ryzen 7 5800X</h3>
+                            <p class="description">8-core processor, never overclocked. Comes with original cooler and packaging.</p>
+                            <span class="price">$249</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <span>(18)</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="seller">by PCBuilder</span>
+                                <a href="#" class="details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image" style="background-color: #E0E0E0;"><span class="img-text">32GB DDR4 Image</span></div>
+                        <div class="card-content">
+                            <div class="card-tags">
+                                <span class="tag tag-excellent">Excellent</span>
+                                <span class="tag tag-category">Memory</span>
+                            </div>
+                            <h3>Corsair Vengeance 32GB DDR4-3200</h3>
+                            <p class="description">High-performance memory kit, tested and working perfectly. RGB lighting included.</p>
+                            <span class="price">$89</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span>(31)</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="seller">by MemoryGuru</span>
+                                <a href="#" class="details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image" style="background-color: #E0E0E0;"><span class="img-text">1TB NVMe SSD Image</span></div>
+                        <div class="card-content">
+                            <div class="card-tags">
+                                <span class="tag tag-excellent">Excellent</span>
+                                <span class="tag tag-category">Storage</span>
+                            </div>
+                            <h3>Samsung 980 PRO 1TB NVMe SSD</h3>
+                            <p class="description">Ultra-fast PCIe 4.0 SSD with 95% health remaining. Perfect for gaming and productivity.</p>
+                            <span class="price">$79</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                <span>(43)</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="seller">by StorageKing</span>
+                                <a href="#" class="details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card">
+                        <div class="product-image" style="background-color: #E0E0E0;"><span class="img-text">RTX 4060 Ti Image</span></div>
+                        <div class="card-content">
+                            <div class="card-tags">
+                                <span class="tag tag-like-new">Like New</span>
+                                <span class="tag tag-category">Graphics Card</span>
+                            </div>
+                            <h3>ASUS RTX 4060 Ti ROG Strix</h3>
+                            <p class="description">Latest generation GPU with DLSS 3 support. Purchased 2 months ago, barely used.</p>
+                            <span class="price">$459</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                <span>(15)</span>
+                            </div>
+                            <div class="card-footer">
+                                <span class="seller">by GamerX</span>
+                                <a href="#" class="details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <button class="help-btn">
+        <i class="fas fa-question-circle"></i> Help
+    </button>
+
+</body>
+</html>

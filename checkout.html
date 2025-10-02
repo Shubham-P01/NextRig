@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - NextRig</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4a24449835.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <nav class="navbar container">
+            <a href="#" class="nav-logo">NextRig</a>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link">Home</a></li>
+                <li><a href="#" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">Forum</a></li>
+                <li><a href="#" class="nav-link">About Us</a></li>
+                <li><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-user"></i>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <a href="#" class="back-link"><i class="fas fa-arrow-left"></i> Back to Cart</a>
+        <div class="page-header">
+            <h1>Checkout</h1>
+            <p>Complete your order securely</p>
+        </div>
+
+        <div class="checkout-layout">
+            <section class="checkout-details">
+                <form>
+                    <div class="form-section">
+                        <h2>Shipping Information</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="first-name">First Name *</label>
+                                <input type="text" id="first-name" value="John">
+                            </div>
+                            <div class="form-group">
+                                <label for="last-name">Last Name *</label>
+                                <input type="text" id="last-name" value="Doe">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" value="john.doe@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" value="+91 98765 43210">
+                        </div>
+                        <div class="form-group">
+                            <label for="street-address">Street Address *</label>
+                            <input type="text" id="street-address" value="123 Main Street">
+                        </div>
+                        <div class="form-group">
+                            <label for="apartment">Apartment, Suite, etc.</label>
+                            <input type="text" id="apartment" value="Apt 4B">
+                        </div>
+                        <div class="form-row triple">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" value="Mumbai">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <select id="state">
+                                    <option>Maharashtra</option>
+                                    <option>Goa</option>
+                                    <option>Delhi</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="pin-code">PIN Code *</label>
+                                <input type="text" id="pin-code" value="400001">
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="save-address">
+                            <label for="save-address">Save this address for future orders</label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Payment Method</h2>
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <input type="radio" id="razorpay" name="payment-method" checked>
+                                <label for="razorpay" class="payment-label">
+                                    <div class="payment-title">
+                                        <img src="https://i.imgur.com/k2fC3bJ.png" alt="Razorpay Logo" class="payment-logo">
+                                        <strong>Razorpay</strong>
+                                        <div class="card-icons">
+                                            <i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i> UPI, Cards, Net Banking
+                                        </div>
+                                    </div>
+                                    <p>Pay securely using Razorpay. Supports all major payment methods including UPI, Credit/Debit Cards, and Net Banking.</p>
+                                </label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" id="cod" name="payment-method">
+                                <label for="cod" class="payment-label">
+                                    <strong>Cash on Delivery</strong> (₹50 extra charges)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>Order Notes</h2>
+                        <div class="form-group">
+                            <textarea placeholder="Special instructions for delivery..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="order-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <ul class="summary-items">
+                        <li class="summary-item">
+                            <div class="item-thumb">RTX 3070</div>
+                            <div class="item-info">
+                                <p>NVIDIA GeForce RTX 3070</p>
+                                <small>Qty: 1</small>
+                            </div>
+                            <div class="item-price">420.00</div>
+                        </li>
+                        <li class="summary-item">
+                            <div class="item-thumb">I7 10700k</div>
+                            <div class="item-info">
+                                <p>Intel Core i7-10700K</p>
+                                <small>Qty: 1</small>
+                            </div>
+                            <div class="item-price">280.00</div>
+                        </li>
+                        <li class="summary-item">
+                            <div class="item-thumb">RAM</div>
+                            <div class="item-info">
+                                <p>Corsair Vengeance LPX 32GB</p>
+                                <small>Qty: 1</small>
+                            </div>
+                            <div class="item-price">180.00</div>
+                        </li>
+                    </ul>
+                    <div class="summary-breakdown">
+                        <div class="breakdown-row"><span>Subtotal</span><span>₹73,040</span></div>
+                        <div class="breakdown-row"><span>Shipping</span><span>₹1,245</span></div>
+                        <div class="breakdown-row"><span>GST (18%)</span><span>₹13,371</span></div>
+                        <hr>
+                        <div class="breakdown-total"><span>Total</span><span>₹87,656</span></div>
+                    </div>
+                    <button class="pay-btn"><i class="fas fa-lock"></i> Pay with Razorpay</button>
+                    <div class="security-info">
+                        <p><i class="fas fa-shield-alt"></i> Secured by Razorpay 256-bit SSL</p>
+                        <img src="https://i.imgur.com/k2fC3bJ.png" alt="Razorpay Logo" class="razorpay-powered">
+                        <span>Powered by Razorpay</span>
+                    </div>
+                </div>
+
+                <div class="help-card">
+                    <h3>Need Help?</h3>
+                    <ul>
+                        <li><i class="fas fa-phone-alt"></i><div><strong>Call us</strong><p>+91 9876-123-4567</p></div></li>
+                        <li><i class="fas fa-envelope"></i><div><strong>Email support</strong><p>support@nextrig.com</p></div></li>
+                        <li><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><p>+91 98765-43210</p></div></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <button class="help-btn">
+        <i class="fas fa-question-circle"></i> Help
+    </button>
+</body>
+</html>
