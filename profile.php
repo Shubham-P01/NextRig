@@ -163,45 +163,7 @@ if (!empty($user['profile_picture_url']) && file_exists(__DIR__.'/'.$user['profi
     <script src="https://kit.fontawesome.com/4a24449835.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<header class="header">
-    <nav class="navbar container">
-        <a href="#" class="nav-logo">NextRig</a>
-        <ul class="nav-menu">
-            <li><a href="#" class="nav-link">Home</a></li>
-            <li><a href="#" class="nav-link">Shop</a></li>
-            <li><a href="#" class="nav-link">Forum</a></li>
-            <li><a href="#" class="nav-link">About Us</a></li>
-            <li><a href="#" class="nav-link">Contact</a></li>
-        </ul>
-        <div class="nav-icons">
-    <i class="fas fa-search"></i>
-    <i class="fas fa-shopping-cart"></i>
-    <i class="fas fa-user"></i>
-
-   <?php if(isset($_SESSION['first_name'])): ?>
-    <div class="nav-user">
-        <?php if(!empty($_SESSION['profile_picture_url'])): ?>
-            <img src="<?= htmlspecialchars($_SESSION['profile_picture_url']) ?>" 
-                 alt="Profile Picture" 
-                 class="nav-avatar">
-        <?php else: ?>
-            <div class="nav-avatar-placeholder">
-                <?= strtoupper(substr($_SESSION['first_name'],0,1)) ?>
-            </div>
-        <?php endif; ?>
-        <a href="profile-settings.php" class="nav-username"><?= htmlspecialchars($_SESSION['first_name']) ?></a>
-        <a href="logout.php" class="nav-logout">Logout</a>
-    </div>
-<?php else: ?>
-    <a href="login.php" class="btn btn-light nav-login">Login</a>
-<?php endif; ?>
-
-        
-    </div>
-        </div>
-    </nav>
-</header>
-
+<?php include 'header.php'; ?>
 <main class="container">
     <nav class="breadcrumbs">
         <a href="#">Home</a> &gt; <span>My Account</span>

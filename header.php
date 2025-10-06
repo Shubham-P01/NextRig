@@ -90,6 +90,7 @@ $is_banned = false; // A logged-in user cannot be banned
             <a href="index.php" class="nav-link">Home</a>
             <a href="shop.php" class="nav-link active">Shop</a>
             <a href="forum.php" class="nav-link">Forum</a>
+            <a href="sell.php" class="nav-link">Sell</a>
             <a href="aboutus.php" class="nav-link">About Us</a>
             <a href="contact.php" class="nav-link">Contact</a>
         </nav>

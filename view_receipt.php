@@ -43,8 +43,15 @@ foreach ($order_items as $item) {
 // Define shipping charges (can be dynamic or fixed)
 $shipping_charges = 250; // Example fixed shipping charge
 
-// Calculate total
-$total = $subtotal + $shipping_charges;
+// Fetch promo code and discount details from the session
+$promo_code = $_SESSION['promo_code'] ?? null;
+$discount_percent = $_SESSION['discount_percent'] ?? 0;
+
+// Calculate discount amount
+$discount_amount = ($subtotal * $discount_percent) / 100;
+
+// Calculate total after discount
+$total = $subtotal + $shipping_charges - $discount_amount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -123,6 +130,9 @@ $total = $subtotal + $shipping_charges;
         <div class="order-summary">
             <p><strong>Subtotal:</strong> ₹<?= number_format($subtotal, 2) ?></p>
             <p><strong>Shipping:</strong> ₹<?= number_format($shipping_charges, 2) ?></p>
+            <?php if ($promo_code): ?>
+                <p><strong>Promo Code (<?= htmlspecialchars($promo_code) ?>):</strong> -₹<?= number_format($discount_amount, 2) ?></p>
+            <?php endif; ?>
             <div class="divider"></div>
             <p><strong>Grand Total:</strong> ₹<?= number_format($total, 2) ?></p>
         </div>

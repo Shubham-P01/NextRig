@@ -650,6 +650,7 @@ a {
             <li><a href="index.php" class="nav-link">Home</a></li>
             <li><a href="shop.php" class="nav-link">Shop</a></li>
             <li><a href="forum.php" class="nav-link">Forum</a></li>
+            <li href="sell.php" class="nav-link">Sell</a></li>
             <li><a href="aboutus.php" class="nav-link">About Us</a></li>
             <li><a href="contact.php" class="nav-link">Contact</a></li>
         </ul>

@@ -54,6 +54,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_item_id'])) {
     exit();
 }
 
+// Handle promo code submission
+$promo_code = '';
+$discount = 0;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['promo_code'])) {
+    $promo_code = trim($_POST['promo_code']);
+
+    // Check if the promo code exists and is active
+    $promo_sql = "SELECT discount_percent FROM promo_codes WHERE code = ? AND status = 'active'";
+    $promo_stmt = $pdo->prepare($promo_sql);
+    $promo_stmt->execute([$promo_code]);
+    $promo_data = $promo_stmt->fetch();
+
+    if ($promo_data) {
+        $_SESSION['promo_code'] = $promo_code;
+        $_SESSION['discount_percent'] = $promo_data['discount_percent'];
+    } else {
+        $_SESSION['promo_code'] = null;
+        $_SESSION['discount_percent'] = 0;
+        $error_message = "Invalid or inactive promo code.";
+    }
+} else {
+    // Clear promo code session variables if no promo code is submitted
+    $_SESSION['promo_code'] = null;
+    $_SESSION['discount_percent'] = 0;
+}
+
 // Fetch all cart items for display
 $sql = "SELECT 
     ci.cart_item_id, p.name AS product_name, p.price, ci.quantity,
@@ -74,8 +101,11 @@ foreach ($cart_products as $item) {
     $subtotal += $item['price'] * $item['quantity'];
 }
 $shipping = 250.00;
-// Note: The tax in the target image is ~7.636%. Adjust as needed.
-$total = $subtotal + $shipping;
+
+// Apply discount if a valid promo code is used
+$discount_percent = $_SESSION['discount_percent'] ?? 0; // Fetch discount percent from session
+$discount_amount = ($subtotal * $discount_percent) / 100; // Calculate discount amount
+$total = $subtotal - $discount_amount + $shipping;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -245,9 +275,13 @@ $total = $subtotal + $shipping;
         }
         .promo-input input:focus { border-color: #A5B4FC; }
         .promo-input button {
-            background-color: #F3F4F6; border: 1px solid var(--border-color); border-left: none;
-            border-radius: 0 6px 6px 0; padding: 0 16px; font-weight: 500; cursor: not-allowed;
-            color: var(--secondary-text);
+            background-color: var(--button-primary-bg); /* Change to primary button color */
+    border: none; /* Remove unnecessary border */
+    border-radius: 0 6px 6px 0;
+    padding: 0 16px;
+    font-weight: 500;
+    cursor: pointer; /* Enable pointer cursor */
+    color: var(--button-primary-text); /* Change text color to white */
         }
         .checkout-btn {
             width: 100%; background-color: var(--button-primary-bg); color: var(--button-primary-text);
@@ -275,17 +309,14 @@ $total = $subtotal + $shipping;
         <nav class="nav-menu">
             <a href="index.php" class="nav-link">Home</a>
             <a href="shop.php" class="nav-link active">Shop</a>
-            <a href="forum.php" class="nav-link">Forum</a>
-            <a href="aboutus" class="nav-link">About Us</a>
+            <a href="form.php" class="nav-link">Forum</a>
+            <a href="sell.php" class="nav-link">Sell</a>
+            <a href="aboutus.php" class="nav-link">About Us</a>
             <a href="contact.php" class="nav-link">Contact</a>
         </nav>
         <div class="nav-icons">
-    <a href="/search" title="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </a>
-    
-    <a href="/account" title="My Account">
-        <svg xmlns="http://www.w.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    <a href="profile.php" title="My Account">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     </a>
 
     <a href="cart.php" title="Shopping Cart">
@@ -358,18 +389,27 @@ $total = $subtotal + $shipping;
                         <span>Shipping</span>
                         <span>₹<?= number_format($shipping, 2) ?></span>
                     </div>
+                    <div class="summary-item">
+    <span>Discount (<?= htmlspecialchars($promo_code) ?>)</span>
+    <span>-₹<?= number_format($discount_amount, 2) ?></span>
+</div>
                     <hr>
                     <div class="summary-total">
                         <span>Total</span>
                         <span>₹<?= number_format($total, 2) ?></span>
                     </div>
                     <div class="promo-code">
-                        <label for="promo">Promo Code</label>
-                        <div class="promo-input">
-                            <input type="text" id="promo" placeholder="Enter code">
-                            <button enabled>Apply</button>
-                        </div>
-                    </div>
+    <form method="POST" action="<?= $_SERVER['PHP_SELF'] ?>">
+        <label for="promo">Promo Code</label>
+        <div class="promo-input">
+            <input type="text" id="promo" name="promo_code" placeholder="Enter code" value="<?= htmlspecialchars($promo_code) ?>">
+            <button type="submit">Apply</button> <!-- Ensure this button is clickable -->
+        </div>
+    </form>
+    <?php if (!empty($error_message)): ?>
+        <p style="color: red;"><?= htmlspecialchars($error_message) ?></p>
+    <?php endif; ?>
+</div>
                     <a href="checkout.php" class="checkout-btn">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
     Proceed to Checkout

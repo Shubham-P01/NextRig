@@ -44,7 +44,18 @@ foreach ($cart_products as $item) {
     $subtotal += $item['price'] * $item['quantity'];
 }
 $shipping = 250.00; 
-$total = $subtotal + $shipping;
+
+$promo_code = $_SESSION['promo_code'] ?? null; // Check if promo code exists in the session
+$discount_percent = $_SESSION['discount_percent'] ?? 0; // Check if discount percent exists in the session
+
+// Only apply discount if a promo code is present
+if ($promo_code && $discount_percent > 0) {
+    $discount_amount = ($subtotal * $discount_percent) / 100;
+} else {
+    $discount_amount = 0; // No discount if promo code is not set
+}
+
+$total = $subtotal + $shipping - $discount_amount;
 
 $your_upi_id = 'devangvijithp@okicici';
 $your_name = 'NextRig';
@@ -105,9 +116,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        *{
-             font-family: 'Popins', sans-serif;
-        }
         :root {
             --primary-text: #111827;
             --secondary-text: #6B7280;
@@ -118,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             --error-color: #EF4444;
         }
         body {
-            font-family: 'Popins', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--background-color);
             margin: 0;
             color: var(--primary-text);
@@ -472,8 +480,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <hr>
                             <div class="summary-line"><span>Subtotal</span><span>₹<?= number_format($subtotal, 2) ?></span></div>
                             <div class="summary-line"><span>Shipping</span><span>₹<?= number_format($shipping, 2) ?></span></div>
-                            <hr>
-                            <div class="summary-line total"><span>Total</span><span>₹<?= number_format($total, 2) ?></span></div>
+                            <?php if ($promo_code): ?>
+    <div class="summary-line"><span>Promo Code (<?= htmlspecialchars($promo_code) ?>)</span><span>-₹<?= number_format($discount_amount, 2) ?></span></div>
+<?php endif; ?>
+<hr>
+<div class="summary-line total"><span>Total</span><span>₹<?= number_format($total, 2) ?></span></div>
                             <button type="submit" class="pay-button">Place Order</button>
                         </div>
 

@@ -225,16 +225,12 @@ function display_answers($all_answers, $parent_id, $product_id, $question_id) {
         <nav class="nav-menu">
             <a href="index.php" class="nav-link">Home</a>
             <a href="shop.php" class="nav-link active">Shop</a>
-            <a href="form.php" class="nav-link">Forum</a>
-            <a href="#" class="nav-link">About Us</a>
-            <a href="#" class="nav-link">Contact</a>
+            <a href="forum.php" class="nav-link">Forum</a>
+            <a href="aboutus.php" class="nav-link">About Us</a>
+            <a href="contact.php" class="nav-link">Contact</a>
         </nav>
-        <div class="nav-icons">
-    <a href="/search" title="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </a>
-    
-    <a href="/account" title="My Account">
+        <div class="nav-icons">  
+    <a href="profile.php" title="My Account">
         <svg xmlns="http://www.w.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
     </a>
 

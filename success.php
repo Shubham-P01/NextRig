@@ -2,41 +2,53 @@
 session_start();
 require 'connection.php';
 
-// Get the order ID from the URL
-$order_id = filter_input(INPUT_GET, 'order_id', FILTER_VALIDATE_INT);
-
-if (!$order_id) {
-    header("Location: index.php"); 
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
     exit();
 }
 
-// Fetch main order details
-$sql = "SELECT * FROM orders WHERE order_id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$order_id]);
-$order = $stmt->fetch();
+$order_id = $_GET['order_id'] ?? null;
+if (!$order_id) {
+    header("Location: index.php");
+    exit();
+}
+
+// --- FIXED QUERY ---
+// Fetch ALL order details by using SELECT *
+$order_sql = "SELECT * FROM orders WHERE order_id = ?";
+$order_stmt = $pdo->prepare($order_sql);
+$order_stmt->execute([$order_id]);
+$order = $order_stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$order) {
     header("Location: index.php");
     exit();
 }
 
-// Fetch order items
-$items_sql = "SELECT oi.quantity, oi.price_per_unit, p.name AS product_name
-              FROM order_items oi
-              JOIN products p ON oi.product_id = p.product_id
-              WHERE oi.order_id = ?";
-$items_stmt = $pdo->prepare($items_sql);
-$items_stmt->execute([$order_id]);
-$order_items = $items_stmt->fetchAll();
+// Fetch promo code details from the session if they exist
+$promo_code = $_SESSION['promo_code'] ?? null;
+$discount_percent = $_SESSION['discount_percent'] ?? 0;
 
-// Calculate totals
 $subtotal = 0;
+// Fetch order items to calculate subtotal correctly
+$order_items_sql = "
+    SELECT p.name AS item_name, oi.quantity, oi.price_per_unit
+    FROM order_items oi
+    JOIN products p ON oi.product_id = p.product_id
+    WHERE oi.order_id = ?
+";
+$order_items_stmt = $pdo->prepare($order_items_sql);
+$order_items_stmt->execute([$order_id]);
+$order_items = $order_items_stmt->fetchAll(PDO::FETCH_ASSOC);
+
 foreach ($order_items as $item) {
     $subtotal += $item['price_per_unit'] * $item['quantity'];
 }
-$shipping = 250.00;
-$total = $subtotal + $shipping;
+
+$shipping = 250; // Default shipping cost
+$discount_amount = ($subtotal * $discount_percent) / 100;
+$total = $subtotal + $shipping - $discount_amount;
 
 ?>
 <!DOCTYPE html>
@@ -185,10 +197,10 @@ $total = $subtotal + $shipping;
             <p>Thank you for your order. A copy of your receipt is below.</p>
         </div>
     
-        <div class="tracking-container non-printable <?= ($order['order_status'] !== 'Shipped') ? 'processing' : '' ?>">
-            <h2><i class="fas fa-box-open"></i> Order Status: <?= htmlspecialchars($order['order_status']) ?></h2>
+        <div class="tracking-container non-printable">
+            <h2><i class="fas fa-box-open"></i> Order Status: <?= htmlspecialchars($order['order_status'] ?? 'N/A') ?></h2>
             <p>You can view detailed tracking information for your order.</p>
-            <a href="track_order.php?order_id=<?= htmlspecialchars($order['order_id']) ?>" class="track-button">View Detailed Tracking</a>
+            <a href="track_order.php?order_id=<?= htmlspecialchars($order_id) ?>" class="track-button">View Detailed Tracking</a>
         </div>
     
         <div id="receipt" class="receipt-wrapper">
@@ -198,11 +210,11 @@ $total = $subtotal + $shipping;
             </div>
             <div class="order-details">
                 <div>
-                    <strong>Order ID:</strong> #<?= htmlspecialchars($order['order_id']) ?><br>
-                    <strong>Order Date:</strong> <?= date("d M, Y", strtotime($order['order_date'])) ?>
+                    <strong>Order ID:</strong> #<?= htmlspecialchars($order['order_id'] ?? 'N/A') ?><br>
+                    <strong>Order Date:</strong> <?= date("d M, Y", strtotime($order['order_date'] ?? 'now')) ?>
                 </div>
                 <div>
-                    <strong>Payment Method:</strong> <?= strtoupper(htmlspecialchars($order['payment_method'])) ?><br>
+                    <strong>Payment Method:</strong> <?= strtoupper(htmlspecialchars($order['payment_method'] ?? 'N/A')) ?><br>
                     <?php if (isset($order['payment_id']) && !empty($order['payment_id'])): ?>
                         <strong>Transaction ID:</strong> <?= htmlspecialchars($order['payment_id']) ?>
                     <?php endif; ?>
@@ -211,12 +223,12 @@ $total = $subtotal + $shipping;
             <div class="customer-details">
                 <div>
                     <strong>Billed To:</strong><br>
-                    <?= htmlspecialchars($order['billing_name']) ?><br>
-                    <?= htmlspecialchars($order['billing_email']) ?>
+                    <?= htmlspecialchars($order['billing_name'] ?? 'N/A') ?><br>
+                    <?= htmlspecialchars($order['billing_email'] ?? 'N/A') ?>
                 </div>
                 <div>
                     <strong>Shipping Address:</strong><br>
-                    <?= htmlspecialchars($order['shipping_address']) ?>
+                    <?= htmlspecialchars($order['shipping_address'] ?? 'N/A') ?>
                 </div>
             </div>
     
@@ -232,7 +244,7 @@ $total = $subtotal + $shipping;
                 <tbody>
                     <?php foreach ($order_items as $item): ?>
                     <tr>
-                        <td><?= htmlspecialchars($item['product_name']) ?></td>
+                        <td><?= htmlspecialchars($item['item_name']) ?></td>
                         <td><?= $item['quantity'] ?></td>
                         <td>₹<?= number_format($item['price_per_unit'], 2) ?></td>
                         <td>₹<?= number_format($item['price_per_unit'] * $item['quantity'], 2) ?></td>
@@ -251,9 +263,15 @@ $total = $subtotal + $shipping;
                         <td>Shipping:</td>
                         <td>₹<?= number_format($shipping, 2) ?></td>
                     </tr>
-                     <tr>
+                    <?php if ($promo_code): ?>
+                    <tr>
+                        <td>Promo Code (<?= htmlspecialchars($promo_code) ?>):</td>
+                        <td>-₹<?= number_format($discount_amount, 2) ?></td>
+                    </tr>
+                    <?php endif; ?>
+                    <tr>
                         <td style="font-weight: bold; border-top: 2px solid #333;">Grand Total:</td>
-                        <td style="font-weight: bold; border-top: 2px solid #333;">₹<?= number_format($total, 2) ?></td>
+                        <td style="font-weight: bold; border-top: 2px solid #333;">₹<?= number_format($order['total_amount'], 2) ?></td>
                     </tr>
                 </table>
                 <div style="clear:both;"></div>
@@ -273,25 +291,17 @@ $total = $subtotal + $shipping;
     
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Define a unique key for this specific order in sessionStorage
         const soundPlayedKey = 'sound_played_for_order_<?= $order_id ?>';
-        
-        // Check if the sound has NOT been played in this session for this order
         if (!sessionStorage.getItem(soundPlayedKey)) {
             const audio = document.getElementById('success-sound');
             const playButtonContainer = document.getElementById('play-sound-button-container');
-
             const playPromise = audio.play();
-
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
-                    // If autoplay starts successfully, set the flag in sessionStorage
                     sessionStorage.setItem(soundPlayedKey, 'true');
                 }).catch(error => {
-                    // Autoplay was blocked by the browser. Show a manual play button.
                     console.log('Autoplay was prevented by the browser.');
                     playButtonContainer.style.display = 'block';
-                    // Set the flag anyway, so we don't try to autoplay on subsequent reloads.
                     sessionStorage.setItem(soundPlayedKey, 'true');
                 });
             }
